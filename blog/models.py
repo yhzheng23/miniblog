@@ -1,13 +1,14 @@
 from django.db import models
 from datetime import datetime
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey('Blogger',on_delete=models.SET_NULL,null=True)
-    time_of_creation = models.DateTimeField(null=True,blank=True)
+    time_of_creation = models.DateTimeField(default=datetime.now, null=True,blank=True)
     tag = models.ManyToManyField('Tag',help_text='add a tag for this blog')
     content = models.TextField(max_length=5000)
 
@@ -35,15 +36,14 @@ class Tag(models.Model):
         return self.name
 
 class Blogger(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    user = models.OneToOneField(User,on_delete=models.SET_NULL,null=True)
     self_introduction = models.TextField(max_length=500)
 
     class Meta:
-        ordering = ['last_name','first_name']
+        ordering = ['user']
 
     def __str__(self):
-        return f'{self.first_name},{self.last_name}'
+        return self.user.username
 
     def get_absolute_url(self):
         return reverse('blogger-detail', args=[str(self.id)])
@@ -51,7 +51,7 @@ class Blogger(models.Model):
 class Comment(models.Model):
     blog = models.ForeignKey('Blog', on_delete=models.SET_NULL,null=True)
     commenter = models.ForeignKey('Blogger',on_delete=models.SET_NULL,null=True)
-    time_of_creation = models.DateTimeField(null=True,blank=True)
+    time_of_creation = models.DateTimeField(default=datetime.now,null=True,blank=True)
     content = models.TextField(max_length=500)
 
     class Meta:
