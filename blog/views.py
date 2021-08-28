@@ -1,6 +1,7 @@
 from blog.models import Blogger
 from django.shortcuts import render
 from .models import Blog,Blogger,Comment
+from django.views import generic
 
 # Create your views here.
 def index(request):
@@ -18,3 +19,16 @@ def index(request):
     }
 
     return render(request,'index.html',context=context)
+
+
+class BlogListView(generic.ListView):
+    model = Blog
+    paginate_by = 5
+
+class BlogDetailView(generic.DetailView):
+    model = Blog
+
+class BloggerDetailView(generic.DetailView):
+    model = Blogger
+
+
