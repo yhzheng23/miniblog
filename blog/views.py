@@ -16,6 +16,7 @@ def index(request):
         'num_bloggers': num_bloggers,
         'num_blogs':num_blogs,
         'num_comments':num_comments,
+        'num_visits':num_visits,
     }
 
     return render(request,'index.html',context=context)
