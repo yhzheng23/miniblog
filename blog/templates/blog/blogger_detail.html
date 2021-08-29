@@ -1,15 +1,16 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Bloggr: {{ blogger }}</h1>
+    <h1>Blogger: {{ blogger }}</h1>
 
-    <p>Bio:{{blogger.self_introduction}}</p>
+    <p>Name: {{blogger.first_name}}, {{blogger.last_name}}</p>
+    <p>Bio: {{blogger.self_introduction}}</p>
 
     <div style="margin-left: 20px; margin-top: 20px;">
         <h4>Posts</h4>
 
         <dl>
-            {% for blog in blogger.blog_set.all %}
+            {% for blog in blogger.user.blog_set.all %}
             <dt><a href="{{blog.get_absolute_url}}">{{blog}}</a>({{blog.time_of_creation}})</dt>
             {% endfor %}
         </dl>

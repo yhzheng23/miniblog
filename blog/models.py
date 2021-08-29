@@ -7,9 +7,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Blog(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ForeignKey('Blogger',on_delete=models.SET_NULL,null=True)
+    author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     time_of_creation = models.DateTimeField(default=datetime.now, null=True,blank=True)
-    tag = models.ManyToManyField('Tag',help_text='add a tag for this blog')
     content = models.TextField(max_length=5000)
 
     class Meta:
@@ -21,22 +20,10 @@ class Blog(models.Model):
     def get_absolute_url(self):
         return reverse('blog-detail', args=[str(self.id)])
 
-    def display_tag(self):
-        return ', '.join(tag.name for tag in self.tag.all()[:3])
-    
-    display_tag.short_description = 'tag'
-
-class Tag(models.Model):
-    name = models.CharField(
-        max_length=200,
-        help_text='enter a blog tag'
-    )
-
-    def __str__(self):
-        return self.name
-
 class Blogger(models.Model):
     user = models.OneToOneField(User,on_delete=models.SET_NULL,null=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     self_introduction = models.TextField(max_length=500)
 
     class Meta:
@@ -50,7 +37,7 @@ class Blogger(models.Model):
 
 class Comment(models.Model):
     blog = models.ForeignKey('Blog', on_delete=models.SET_NULL,null=True)
-    commenter = models.ForeignKey('Blogger',on_delete=models.SET_NULL,null=True)
+    commenter = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     time_of_creation = models.DateTimeField(default=datetime.now,null=True,blank=True)
     content = models.TextField(max_length=500)
 

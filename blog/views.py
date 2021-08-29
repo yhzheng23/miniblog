@@ -2,6 +2,8 @@ from blog.models import Blogger
 from django.shortcuts import render
 from .models import Blog,Blogger,Comment
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 def index(request):
@@ -32,4 +34,19 @@ class BlogDetailView(generic.DetailView):
 class BloggerDetailView(generic.DetailView):
     model = Blogger
 
+class BlogCreate(LoginRequiredMixin, CreateView):
+    model = Blog
+    fields = ['title', 'time_of_creation', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class BloggerUpdate(LoginRequiredMixin, CreateView):
+    model = Blogger
+    fields = ['first_name', 'last_name', 'self_introduction']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 

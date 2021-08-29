@@ -3,9 +3,8 @@
 {% block content %}
     <h1>Title: {{ blog.title }}</h1>
 
-    <p><strong>Author:</strong> <a href="{{blog.author.get_absolute_url}}">{{ blog.author }}</a></p>
+    <p><strong>Author:</strong> <a href="{{blog.author.blogger.get_absolute_url}}">{{ blog.author }}</a></p>
     <p><strong>Created at:</strong> {{ blog.time_of_creation }}</p>
-    <p><strong>Tag:</strong> {{ blog.display_tag }}</p>
     <p><strong>Content:</strong> {{ blog.content }}</p>
 
     <div style="margin-left: 20px; margin-top: 20px;">
