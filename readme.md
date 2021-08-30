@@ -41,4 +41,4 @@ V login related
     11.3 validdate form
     11.4 define success url
 12. blogger signup
-    Django user + customized view function (build Blogger object)
+    Django user + customized view function (to build Blogger object based on user fields)
