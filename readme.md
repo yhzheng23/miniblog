@@ -35,7 +35,9 @@ IV basic pages
 V login related
 9. use django out-of-box authentication mechanism
 10. use modelform or generic-editing-views to handle create/update/delete blogs, comments with user input.
+11. 'add new comment':
+    11.1 get context from super class
+    11.2 assgin blog and commenter
+    11.3 define success url
 
-issues:
-1. add comments
 2. how to create user/blogger from website, instead of admin page

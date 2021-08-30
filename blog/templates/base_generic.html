@@ -18,6 +18,7 @@
                     <ul class="sidebar-nav">
                         <li><a href="{% url 'index' %}">Home</a></li>
                         <li><a href="{% url 'blogs' %}">All Blogs</a></li>
+                        <li><a href="{% url 'bloggers' %}">All Bloggers</a></li>
                         <li><a href="{% url 'blog-create' %}">New Blog</a></li>
 
                         {% if user.is_authenticated %}

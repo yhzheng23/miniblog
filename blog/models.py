@@ -45,7 +45,7 @@ class Comment(models.Model):
         ordering = ['-time_of_creation']
     
     def __str__(self):
-        return f'{self.commenter}@{self.time_of_creation} - {self.content[:75]}'
+        return f'{self.commenter.username}@{self.time_of_creation} - {self.content[:75]}'
     
     def get_absolute_url(self):
         return reverse('comment-detail', args=[str(self.id)])
