@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 def index(request):
@@ -51,6 +51,10 @@ class BlogCreate(LoginRequiredMixin, CreateView):
 class BlogUpdate(LoginRequiredMixin,UpdateView):
     model = Blog
     fields = ['title', 'content']
+
+class BlogDelete(LoginRequiredMixin,DeleteView):
+    model = Blog
+    success_url = reverse_lazy('blogs')
 
 class BloggerUpdate(LoginRequiredMixin, CreateView):
     model = Blogger
