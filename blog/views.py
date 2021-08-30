@@ -1,11 +1,12 @@
 from blog.models import Blogger
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Blog,Blogger,Comment
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
+from .forms import BloggerSignUpForm
 
 # Create your views here.
 def index(request):
@@ -56,13 +57,28 @@ class BlogDelete(LoginRequiredMixin,DeleteView):
     model = Blog
     success_url = reverse_lazy('blogs')
 
-class BloggerUpdate(LoginRequiredMixin, CreateView):
+def BloggerSignup(request):
+    if request.method == 'POST':
+        form = BloggerSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            Blogger.objects.update_or_create(user=user, first_name=user.first_name, last_name=user.last_name)
+            user.save()
+            user.blogger.save()
+            return redirect('login')
+    
+    else:
+        form = BloggerSignUpForm()
+    
+    context = {
+        'form':form,
+    }
+    return render(request, 'signup.html', context)
+
+class BloggerUpdate(LoginRequiredMixin, UpdateView):
     model = Blogger
     fields = ['first_name', 'last_name', 'self_introduction']
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
 class BlogCommentCreate(LoginRequiredMixin, CreateView):
     model = Comment

@@ -6,6 +6,11 @@
     <p>Name: {{blogger.first_name}}, {{blogger.last_name}}</p>
     <p>Bio: {{blogger.self_introduction}}</p>
 
+    {% if user.is_authenticated and user.username == blogger.user.username %}
+        <a href="{% url 'blogger-update' blogger.id %}">update profile</a></p>
+    {% endif %}
+
+
     <div style="margin-left: 20px; margin-top: 20px;">
         <h4>Posts</h4>
 

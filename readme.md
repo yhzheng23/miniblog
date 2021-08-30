@@ -40,5 +40,5 @@ V login related
     11.2 assgin blog and commenter
     11.3 validdate form
     11.4 define success url
-
-2. how to create user/blogger from website, instead of admin page
+12. blogger signup
+    Django user + customized view function (build Blogger object)

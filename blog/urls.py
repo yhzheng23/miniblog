@@ -13,6 +13,7 @@ urlpatterns = [
     path('blog/<int:pk>/delete', views.BlogDelete.as_view(), name='blog-delete'),
     path('blog/<int:pk>/comment/', views.BlogCommentCreate.as_view(), name='blog-comment'),
     
-    path('blogger/update/', views.BloggerUpdate.as_view(), name='blogger-update'),
+    path('blogger/signup/', views.BloggerSignup, name='blogger-signup'),
+    path('blogger/<int:pk>/update/', views.BloggerUpdate.as_view(), name='blogger-update'),
     
 ]
