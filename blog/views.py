@@ -48,6 +48,10 @@ class BlogCreate(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+class BlogUpdate(LoginRequiredMixin,UpdateView):
+    model = Blog
+    fields = ['title', 'content']
+
 class BloggerUpdate(LoginRequiredMixin, CreateView):
     model = Blogger
     fields = ['first_name', 'last_name', 'self_introduction']
