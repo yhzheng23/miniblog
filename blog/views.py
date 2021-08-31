@@ -80,7 +80,7 @@ class BloggerUpdate(LoginRequiredMixin, UpdateView):
     model = Blogger
     fields = ['first_name', 'last_name', 'self_introduction']
 
-class BlogCommentCreate(LoginRequiredMixin, CreateView):
+class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['time_of_creation', 'content']
 
@@ -89,7 +89,7 @@ class BlogCommentCreate(LoginRequiredMixin, CreateView):
         Add associated blog to form template so can display its title in HTML.
         """
         # Call the base implementation first to get a context
-        context = super(BlogCommentCreate, self).get_context_data(**kwargs)
+        context = super(CommentCreate, self).get_context_data(**kwargs)
         # Get the blog from id and add it to the context
         context['blog'] = get_object_or_404(Blog, pk = self.kwargs['pk'])
         return context
